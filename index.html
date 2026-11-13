@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101510">
+  <meta name="description" content="Track your chest openings and explore an unofficial Pirate Shop Token probability estimate.">
+  <title>Drop Count — Chest tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Drop Count home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>DROP<span class="brand-light">COUNT</span></span>
+      </a>
+      <div class="topbar-right">
+        <span class="local-badge"><span class="online-dot"></span> SAVED ON THIS DEVICE</span>
+        <button class="icon-button" id="settings-button" aria-label="Edit initial data" title="Edit initial data">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content" hidden>
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR LOOT LOG</p>
+          <h1>Every chest<br><span>counts.</span></h1>
+          <p class="intro-copy">Keep your runs in check. See how the odds stack up.</p>
+        </div>
+        <div class="season-tag"><span class="season-icon">✳</span><span>THE PIRATE<br>SHOP TOKEN</span></div>
+      </section>
+
+      <section class="stats-grid" aria-label="Chest and probability statistics">
+        <article class="stat-card total-card">
+          <div class="stat-top"><span class="stat-label">TOTAL CHESTS OPENED</span><span class="tiny-icon chest-icon">▣</span></div>
+          <div class="total-value" id="total-count">0</div>
+          <div class="stat-foot"><span class="stat-marker"></span><span id="match-summary">Across 0 matches</span></div>
+          <div class="card-grid-art" aria-hidden="true"></div>
+        </article>
+        <article class="stat-card odds-card">
+          <div class="stat-top"><span class="stat-label">ESTIMATED CHANCE</span><span class="odds-tag">UNOFFICIAL</span></div>
+          <div class="chance-value"><span id="probability">0.00000</span><span class="percent">%</span></div>
+          <div class="stat-foot"><span class="stat-marker aqua"></span><span>At least one token</span></div>
+          <div class="odds-bottom">
+            <span class="stat-label">DROP RATE BOOST</span>
+            <div class="multiplier-group" role="group" aria-label="Probability multiplier">
+              <button data-multiplier="1" class="multiplier active" aria-pressed="true">1×</button>
+              <button data-multiplier="1.5" class="multiplier" aria-pressed="false">1.5×</button>
+              <button data-multiplier="2" class="multiplier" aria-pressed="false">2×</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="matches-section">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</p><h2>Your matches <span id="match-count" class="count-pill">0</span></h2></div>
+          <button id="add-match" class="add-button"><span>＋</span> New match</button>
+        </div>
+        <div class="match-list" id="match-list" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <div class="empty-chest">▣</div><h3>No matches yet</h3><p>Create a match to start logging your chest openings.</p>
+          <button class="add-button" id="empty-add">＋ Create first match</button>
+        </div>
+      </section>
+
+      <section class="token-banner" id="token-banner">
+        <div class="token-emblem"><span>✦</span></div>
+        <div class="token-message"><span class="eyebrow">THE BIG ONE</span><h2 id="token-title">Found the Pirate Shop Token?</h2><p id="token-copy">Mark your win here. Your chest log stays right where it is.</p></div>
+        <button id="got-token" class="token-button"><span>✦</span> I got the Token!</button>
+      </section>
+
+      <footer class="footer-note"><span class="info-icon">i</span><span>Orientative estimate based on unofficial data; it does not guarantee the Token.</span><span class="footer-divider"></span><span>Base odds: 1 in 137,500 per chest</span></footer>
+    </main>
+
+    <div id="setup-layer" class="setup-layer" hidden>
+      <div class="setup-backdrop"></div>
+      <section class="setup-card" role="dialog" aria-modal="true" aria-labelledby="setup-title">
+        <button class="setup-close" id="close-setup" aria-label="Close settings" hidden>×</button>
+        <div class="setup-kicker"><span class="brand-mark small"><span></span><span></span><span></span></span> DROP COUNT / SETUP</div>
+        <p class="eyebrow"><span class="eyebrow-line"></span><span id="setup-eyebrow">BEFORE YOU DROP</span></p>
+        <h2 id="setup-title">Let's get your<br><span>loot log started.</span></h2>
+        <p class="setup-copy" id="setup-copy">Add your history to get a more complete estimate from the jump.</p>
+        <form id="setup-form">
+          <label class="field-label" for="played-matches">Matches already played</label>
+          <div class="input-wrap"><input id="played-matches" name="matches" type="number" min="0" step="1" value="0" required><span>MATCHES</span></div>
+          <label class="field-label" for="average-chests">Average chests per match</label>
+          <div class="input-wrap"><input id="average-chests" name="average" type="number" min="0" step="any" value="20" required><span>CHESTS</span></div>
+          <p class="setup-hint">Your historical total is calculated as matches × average chests.</p>
+          <button class="primary-button" type="submit"><span id="setup-submit-label">Build my loot log</span><span>↗</span></button>
+        </form>
+        <p class="setup-privacy"><span class="online-dot"></span> Your progress is saved privately in this browser.</p>
+      </section>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
